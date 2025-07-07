@@ -1,0 +1,36 @@
+# TP MongoDB Pokémon
+## Exercice 1
+
+# Démarrer le shell MongoDB
+mongosh
+
+# Créer et utiliser la base de données PokemonDB
+use PokemonDB
+
+# Créer la collection Pokemons
+db.createCollection("Pokemons")
+
+## Exercice 2
+
+mongoimport --db PokemonDB --collection Pokemons --type csv --headerline --file pokemonGO.csv
+
+## Exercice 3
+
+# Type Feu
+db.Pokemons.find({ Type: "Feu" })
+
+# Pikachu
+db.Pokemons.findOne({ Nom: "Pikachu" })
+
+## Exercice 4
+
+# CP Pika => 900
+db.Pokemons.updateOne(
+  { Nom: "Pikachu" },
+  { $set: { CP: 900 } }
+)
+
+## Exercice 5
+
+# Supprimer Bulbasaur
+db.Pokemons.deleteOne({ Nom: "Bulbasaur" })
