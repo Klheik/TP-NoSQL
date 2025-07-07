@@ -1,0 +1,88 @@
+## Partie 1
+
+# 1.
+use schoolDB
+
+# 2.
+db.createCollection("classes")
+
+## Partie 2
+
+db.classes.insertOne({
+  className: "Mathematics 101",
+  professor: "John Doe",
+  students: [
+    {
+      name: "Charlie",
+      age: 21,
+      grades: { midterm: 79, final: 92 }
+    },
+    {
+      name: "Dylan",
+      age: 23,
+      grades: { midterm: 79, final: 87 }
+    }
+  ]
+})
+
+## Partie 3
+
+# 1/
+db.classes.find({
+  "students.grades.final": { $gt: 85 }
+})
+
+#2.
+db.classes.updateOne(
+  { className: "Mathematics 101", "students.name": "Bob" },
+  { $inc: { "students.$.grades.final": 5 } }
+)
+
+## Partie 4
+
+# 1.
+db.classes.updateOne(
+  { className: "Mathematics 101" },
+  {
+    $push: {
+      students: {
+        name: "Charlie",
+        age: 23,
+        grades: { midterm: 82, final: 88 }
+      }
+    }
+  }
+)
+
+# 2.
+db.classes.updateOne(
+  { className: "Mathematics 101" },
+  { $pull: { students: { name: "Alice" } } }
+)
+
+## Partie 5
+
+#1.
+db.classes.aggregate([
+  { $match: { className: "Mathematics 101" } },
+  { $unwind: "$students" },
+  { $group: {
+      _id: "$className",
+      avgFinal: { $avg: "$students.grades.final" }
+    }
+  }
+])
+
+# 2.
+db.classes.aggregate([
+  { $match: { className: "Mathematics 101" } },
+  { $unwind: "$students" },
+  { $group: {
+      _id: "$className",
+      maxFinal: { $max: "$students.grades.final" }
+    }
+  }
+]
+
+# Vérification :
+db.classes.find().pretty()
