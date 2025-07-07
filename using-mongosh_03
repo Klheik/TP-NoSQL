@@ -1,0 +1,41 @@
+## Partie 1
+
+# 1.
+mongosh
+
+# 2.
+show dbs
+
+# 3. 
+use testDB
+
+# 4.
+db.createCollection("testCollection")
+
+# 5.
+show collections
+
+## Partie 2
+
+# 1.
+db.testCollection.insertOne({ name: "test", value: 1 })
+
+# 2.
+db.testCollection.find()
+
+# 3.
+db.testCollection.updateOne(
+  { name: "test" },
+  { $inc: { value: 1 } }
+)
+
+# 4.
+db.testCollection.deleteOne({ name: "test" })
+
+## Partie 3
+
+# 1.
+db.testCollection.drop()
+
+# 2.
+db.dropDatabase()
